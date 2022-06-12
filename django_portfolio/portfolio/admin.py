@@ -15,6 +15,21 @@ class WorkExperienceAdminForm(forms.ModelForm):
 @admin.register(WorkExperience)
 class WorkExperienceAdmin(admin.ModelAdmin):
   '''Опыт работы'''
-  list_display = ("start_date","end_date","company_name","position","responsibilities")
+  list_display = ("company_name","start_month","start_year","end_month","end_year","position")
+  list_display_links = ("company_name",)
   form = WorkExperienceAdminForm
   search_fields = ("company_name",)
+  fieldsets = (
+    (None, {
+      "fields": (("start_month","start_year"),)
+    }),
+    (None, {
+      "fields": (("end_month","end_year"),)
+    }),
+    (None, {
+      "fields": (("company_name","position"),)
+    }),
+    (None, {
+      "fields": (("responsibilities"),)
+    }),
+  )

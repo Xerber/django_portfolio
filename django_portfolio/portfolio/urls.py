@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import portfolio
+from . import views
 
 
 urlpatterns = [
-    path('', portfolio)
+    path('', views.WorkExperienceView.as_view())
 ]

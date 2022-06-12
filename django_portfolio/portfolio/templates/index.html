@@ -299,85 +299,26 @@
 <div class="section" id="experience">
   <div class="container cc-experience">
     <div class="h4 text-center mb-4 title">Опыт работы</div>
-    <div class="card">
-      <div class="row">
-        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body cc-experience-header">
-            <p>Январь 2021 - по настоящее время</p>
-            <div class="h5">Litota Labs</div>
+    {% for work in experience %}
+      <div class="card">
+        <div class="row">
+          <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+            <div class="card-body cc-experience-header">
+              <p>{{ work.start_month }} {{ work.start_year }} - {% if work.end_month == None or work.end_year == None %} по сейчас {% else %} {{ work.end_month }} {{ work.end_year }} {% endif %} </p>
+              <div class="h5">{{ work.company_name }}</div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body">
-            <div class="h5">Technical Support Specialis (Senior)</div>
-            <p>
-              <li>Взаимодействие с технической поддержкой партнеров;</li>
-              <li>Взаимодействие с внутренней командой разработчиков;</li>
-              <li>Мониторинг состояния сервисов;</li>
-              <li>Диагностика, регистрация, эскалация неисправностей;</li>
-              <li>Обработка обращений партнеров;</li>
-              <li>Обучение новых коллег нашего отдела.</li>
-              Стек: zabbix, new relic, asana, jira, slack, работа с kibana, grafana.</li>
-            </p>
+          <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+            <div class="card-body">
+              <div class="h5">{{ work.position }}</div>
+              <p>
+                {{ work.responsibilities|safe}}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="row">
-        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body cc-experience-header">
-            <p>Декабрь 2020 - Июль 2021</p>
-            <div class="h5">Kwork</div>
-          </div>
-        </div>
-        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body">
-            <div class="h5">Python-разработчик</div>
-            <p>Выполнение заказов по направлению Python, например:
-              <ul>
-                <li>Автоматизация действий на сайте при помощи Selenium;</li>
-                <li>Парсинг данных и последующая обработка bs4, requests;</li>
-                <li>Создание телеграмм ботов pytelegrambotapi, aiogram;</li>
-                <li>Создание vk ботов vk_api, mysql;</li>
-                <li>Создание графической оболочки для внесения изменения в базу данных pyqt5;</li>
-                <li>Работа с базами данных: mysql, sqlite;</li>
-                <li>Исправление багов в уже написанных программах;</li>
-                <a href="https://kwork.ru/user/scavrik" target="_blank">Открыть профиль</a>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="row">
-        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body cc-experience-header">
-            <p>Март 2011 - Декабрь 2020</p>
-            <div class="h5">Megalink</div>
-          </div>
-        </div>
-        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body">
-            <div class="h5">Администратор</div>
-            <p>
-              <ul>
-                <li>Управление людьми ( ремонтные и монтажные бригады )</li>
-                <li>Планирование рабочего дня, транспортная логистика</li>
-                <li>Консультация по диагностике и решению проблем в работе телекоммуникационных линий</li>
-                <li>Базовая настройка управляемых коммутаторов</li>
-                <li>Схематизация оптоволоконной затяжки районов технологией FTTB</li>
-                <li>Добавление новостей / новых информационных страниц / редактирование существующих статей на главном и "вспомогательном" сайтах под управлением WordPress</li>
-                <li>Автоматизация ( Скриптинг ) часто повторяющихся операций</li>
-                <li>Написание нового функционала на языке Python</li>
-                <li>Парсинг сайтов и файлов</li>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
 <div class="section">
