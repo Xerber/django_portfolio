@@ -1,11 +1,37 @@
-from django.shortcuts import render
-from django.views.generic.base import View
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, View
 
-from .models import WorkExperience
+from .models import WorkExperience, Education
+from .forms import OfferForm
 
-# Create your views here.
-class WorkExperienceView(View):
+
+class ExperienceEducation():
+  '''Опыт работы и Образование'''
+  def get_experience(self):
+    return WorkExperience.objects.all().order_by('-start_year')
+  
+  def get_education(self):
+    return Education.objects.all().order_by('-start_year')
+
+
+class WorkExperienceView(ExperienceEducation, ListView):
   '''Опыт работы'''
-  def get(self, request):
-    experience = WorkExperience.objects.all().order_by('-start_year')
-    return render(request,'index.html',{'experience': experience})
+  model = WorkExperience
+  queryset = WorkExperience.objects.all().order_by('-start_year')
+  template_name = 'index.html'
+
+
+class EducationView(ExperienceEducation, ListView):
+  '''Образование'''
+  model = Education
+  queryset = Education.objects.all().order_by('-start_year')
+
+
+class AddOffer(View):
+  '''Заявка на связь'''
+  def post(self, request):
+    form = OfferForm(request.POST)
+    if form.is_valid():
+      form = form.save()
+      return redirect("/")
+    return redirect("/")

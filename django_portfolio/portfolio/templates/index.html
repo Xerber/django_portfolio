@@ -299,7 +299,7 @@
 <div class="section" id="experience">
   <div class="container cc-experience">
     <div class="h4 text-center mb-4 title">Опыт работы</div>
-    {% for work in experience %}
+    {% for work in workexperience_list %}
       <div class="card">
         <div class="row">
           <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
@@ -324,58 +324,25 @@
 <div class="section">
   <div class="container cc-education">
     <div class="h4 text-center mb-4 title">Образование</div>
-    <div class="card">
-      <div class="row">
-        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body cc-education-header">
-            <p>2010 - 2013</p>
-            <div class="h5">ВНУ им. Даля</div>
+      {% for education in view.get_education %}
+        <div class="card">
+          <div class="row">
+            <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+              <div class="card-body cc-education-header">
+                <p>{{ education.start_year }} - {{ education.end_year }}</p>
+                <div class="h5">{{ education.title }}</div>
+              </div>
+            </div>
+            <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+              <div class="card-body">
+                <div class="h5">{{ education.faculty }}</div>
+                <p class="category">{{ education.department }}</p>
+                <p>{{ education.description|safe }}</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body">
-            <div class="h5">Системная инженерия</div>
-            <p class="category">Отделение компьютерных наук</p>
-            <p>В 2012г Получил диплом Бакалавра</p>
-            <p>В 2013г Получил диплом Специалиста</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="row">
-        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body cc-education-header">
-            <p>2006 - 2010</p>
-            <div class="h5">Политехнический колледж (ЛПК)</div>
-          </div>
-        </div>
-        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body">
-            <div class="h5">Работа с интеллектуальными интегрированными системами</div>
-            <p class="category">Отделение компьютерных наук</p>
-            <p>В 2010г получил диплом Младшего специалисти и диплом о полном среднем образовании</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="row">
-        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body cc-education-header">
-            <p>1998 - 2006</p>
-            <div class="h5">ЛКССФМПШ №1</div>
-          </div>
-        </div>
-        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-          <div class="card-body">
-            <div class="h5">Физико-математический уклон</div>
-            <p class="category">Средняя школа</p>
-            <p>По завершению 9го класса получил основное общее образование и ушёл в колледж для получения средне-специального образования</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      {% endfor %}
   </div>
 </div>
 <div class="section" id="reference">
@@ -441,7 +408,8 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="card-body">
-                    <form action="https://formspree.io/f/myyovjol" method="POST">
+                    <form action="{% url 'add_offer' %}" method="post">
+                      {% csrf_token %}
                       <div class="p pb-3"><strong>Отправить мне письмо</strong></div>
                       <div class="row mb-3">
                         <div class="col">
@@ -453,14 +421,14 @@
                       <div class="row mb-3">
                         <div class="col">
                           <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-text"></i></span>
-                            <input class="form-control" type="text" name="Subject" placeholder="Тема сообщения" required="required"/>
+                            <input class="form-control" type="text" name="subject" placeholder="Тема сообщения" required="required"/>
                           </div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <div class="col">
                           <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input class="form-control" type="email" name="_replyto" placeholder="E-mail" required="required"/>
+                            <input class="form-control" type="email" name="email" placeholder="E-mail"/>
                           </div>
                         </div>
                       </div>
