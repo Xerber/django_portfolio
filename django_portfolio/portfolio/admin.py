@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
-from .models import WorkExperience, Education, Offer
+from django.utils.safestring import mark_safe
+from .models import WorkExperience, Education, Offer, Review
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -66,3 +67,32 @@ class OfferAdmin(admin.ModelAdmin):
   readonly_fields = ("subject","name","email","message","created_at")
   list_display_links = ("subject",)
   search_fields = ("subject",)
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+  '''Отзывы'''
+  list_display = ("order_name","where","name","description","get_image","is_active")
+  readonly_fields = ("get_image",)
+  list_display_links = ("order_name",)
+  search_fields = ("order_name","where")
+  list_editable = ("is_active",)
+  fieldsets = (
+    (None, {
+      "fields": (("name","order_name","where"),)
+    }),
+    (None, {
+      "fields": (("description",),)
+    }),
+    (None, {
+      "fields": (("avatar","get_image"),)
+    }),
+    (None, {
+      "fields": (("is_active",),)
+    }),
+  )
+
+  def get_image(self,obj):
+    return mark_safe(f'<img src={obj.avatar.url} width="50" height="50"')
+  
+  get_image.short_description = "Превью"

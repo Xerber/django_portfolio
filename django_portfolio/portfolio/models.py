@@ -112,5 +112,6 @@ class Review(models.Model):
   name = models.CharField("Имя(ник) заказчика", max_length=250)
   where = models.CharField("Источник отзыва (площадка)", max_length=150)
   order_name = models.CharField("Название заказа", max_length=250)
-  review = models.TextField("Комментарий", max_length=2500)
-  avatar = models.ImageField("Аватар", upload_to="reviews/")
+  description = models.TextField("Комментарий", max_length=2500)
+  avatar = models.ImageField("Аватар", upload_to="reviews/", default='reviews/default.png')
+  is_active = models.BooleanField("Отображать отзыв первым", default=False)

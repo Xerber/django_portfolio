@@ -299,7 +299,7 @@
 <div class="section" id="experience">
   <div class="container cc-experience">
     <div class="h4 text-center mb-4 title">Опыт работы</div>
-    {% for work in workexperience_list %}
+    {% for work in view.get_experience %}
       <div class="card">
         <div class="row">
           <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
@@ -355,44 +355,22 @@
           <li data-target="#cc-Indicators" data-slide-to="1"></li>
           <li data-target="#cc-Indicators" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              <div class="col-lg-2 col-md-3 cc-reference-header"><img src="{% static 'images/reference-image-1.jpg'%}" alt="Image"/>
-                <div class="h5 pt-2">Dmitry5342</div>
-                <p class="category">Kwork</p>
+          <div class="carousel-inner">
+            {% for review in view.get_review %}
+              {% if review.is_active == True %}<div class="carousel-item active">{% else %}<div class="carousel-item">{% endif %}
+                <div class="row">
+                  <div class="col-lg-2 col-md-3 cc-reference-header"><img src="{{ review.avatar.url }}" alt="Image"/>
+                    <div class="h5 pt-2">{{ review.name }}</div>
+                    <p class="category">{{ review.where }}</p>
+                  </div>
+                  <div class="col-lg-10 col-md-9">
+                    <p class="category">{{ review.order_name }}</p>
+                    <p>{{ review.description }}</p>
+                  </div>
+                </div>
               </div>
-              <div class="col-lg-10 col-md-9">
-                <p class="category">Телеграм бот с реферальной системой 10 уровня + Админ-панель</p>
-                <p>Профессионал своего дела. Качественная работа. Выполнил все согласно ТЗ без проблем. Рекомендую.</p>
-              </div>
-            </div>
+            {% endfor %}
           </div>
-          <div class="carousel-item">
-            <div class="row">
-              <div class="col-lg-2 col-md-3 cc-reference-header"><img src="{% static 'images/reference-image-2.jpg'%}" alt="Image"/>
-                <div class="h5 pt-2">service555volgograd</div>
-                <p class="category">Kwork</p>
-              </div>
-              <div class="col-lg-10 col-md-9">
-                <p class="category">Парсинг БК и анализ данных с последующей выгрузкой в телеграмм</p>
-                <p>Быстро - чётко, все супер.</p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="row">
-              <div class="col-lg-2 col-md-3 cc-reference-header"><img src="{% static 'images/reference-image-3.jpg'%}" alt="Image"/>
-                <div class="h5 pt-2">Carnagovich</div>
-                <p class="category">Kwork</p>
-              </div>
-              <div class="col-lg-10 col-md-9">
-                <p class="category">Bat для копирования файла из одной папки в другие</p>
-                <p>Заказ был выполнен быстро и хорошо, а на все мои вопросы я получил понятные и развернутые ответы. </p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
