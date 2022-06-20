@@ -62,30 +62,23 @@ class MySkill(models.Model):
 
 
 class MyInfo(models.Model):
-  '''Контакты'''
+  '''Обо мне'''
   name = models.CharField("Фамилия Имя", max_length=50)
   speciality = models.CharField("Специальность", max_length=100)
   age = models.PositiveSmallIntegerField("Возраст")
   languages = models.CharField("Языки", max_length=150)
-  email = models.EmailField()
-  phone = PhoneNumberField()
+  email = models.EmailField("Почта")
+  phone = PhoneNumberField("Телефон")
   about = models.TextField("Обо мне", max_length=2500)
-  link_facebook = models.SlugField("Ссылка на Facebook", max_length=150)
-  title_facebook = models.CharField("Надпись при наведении на Facebook", max_length=100)
-  class_facebook = models.CharField("Bootstrap класс иконки Facebook", default='fa fa-facebook', max_length=100)
-  link_vk = models.SlugField("Ссылка на Vk", max_length=150)
-  title_vk = models.CharField("Надпись при наведении на Vk", max_length=100)
-  class_vk = models.CharField("Bootstrap класс иконки Vk", default='fa fa-vk', max_length=100)
-  link_github = models.SlugField("Ссылка на Github", max_length=150)
-  title_github = models.CharField("Надпись при наведении на Github", max_length=100)
-  class_github = models.CharField("Bootstrap класс иконки Github", default='fa fa-github', max_length=100)
-  link_linkedin = models.SlugField("Ссылка на LinkedIn", max_length=150)
-  title_linkedin = models.CharField("Надпись при наведении на LinkedIn", max_length=100)
-  class_linkedin = models.CharField("Bootstrap класс иконки LinkedIn", default='fa fa-linkedin', max_length=100)
-  link_telegram = models.SlugField("Ссылка на Telegram", max_length=150)
-  title_telegram = models.CharField("Надпись при наведении на Telegram", max_length=100)
-  class_telegram = models.CharField("Bootstrap класс иконки Telegram", default='fa fa-telegram', max_length=100)
   avatar = models.ImageField("Аватар", upload_to="myinfo/")
+
+
+class SocialContact(models.Model):
+  '''Социалки'''
+  name = models.CharField("Название в админке", max_length=100)
+  title = models.CharField("Надпись при наведении на иконку", max_length=100)
+  link = models.CharField("Ссылка на страницу", max_length=150)
+  boot_class = models.CharField("Bootstrap класс иконки", default='fa fa-', max_length=100)
 
 
 class Heading(models.Model):
@@ -95,6 +88,8 @@ class Heading(models.Model):
   url = models.SlugField(max_length=160)
   is_active = models.BooleanField("Отображать рубрику активной", default=False)
 
+  def __str__(self):
+    return self.title_heading
 
 class Portfolio(models.Model):
   '''Примеры работ'''
@@ -102,10 +97,12 @@ class Portfolio(models.Model):
   heading = models.ForeignKey(Heading, verbose_name="Рубрика", on_delete=models.SET_NULL, null=True)
   description = models.TextField("Описание", max_length=2500)
   link = models.CharField("Ссылка на работу в мире", max_length=150)
-  link_github = models.SlugField("Ссылка на Github", max_length=150)
+  link_github = models.CharField("Ссылка на Github", max_length=150)
   poster = models.ImageField("Постер", upload_to="portfolio/")
-  graft = models.BooleanField("Черновик", default=False)
+  draft = models.BooleanField("Черновик", default=False)
 
+  def __str__(self):
+    return f'[{self.heading}] {self.title}'
 
 class Review(models.Model):
   '''Отзывы'''

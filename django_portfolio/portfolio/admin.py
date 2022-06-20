@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 from django.utils.safestring import mark_safe
-from .models import WorkExperience, Education, Offer, Review
+from .models import WorkExperience, Education, Offer, Review, Heading, MyInfo, SocialContact, MySkill, Portfolio
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -15,6 +15,18 @@ class EducationAdminForm(forms.ModelForm):
     description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
     class Meta:
         model = Education
+        fields = '__all__'
+
+class MyInfoAdminForm(forms.ModelForm):
+    about = forms.CharField(label='Обо мне', widget=CKEditorUploadingWidget())
+    class Meta:
+        model = MyInfo
+        fields = '__all__'
+
+class PortfolioAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание работы', widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Portfolio
         fields = '__all__'
 
 @admin.register(WorkExperience)
@@ -40,6 +52,36 @@ class WorkExperienceAdmin(admin.ModelAdmin):
   )
 
 
+@admin.register(Portfolio)
+class PortfolioAdmin(admin.ModelAdmin):
+  '''Примеры работ'''
+  list_display = ("title","heading","link_github")
+  readonly_fields = ("get_image",)
+  form = PortfolioAdminForm
+  fieldsets = (
+    (None, {
+      "fields": (("title","heading"),)
+    }),
+    (None, {
+      "fields": (("description",),)
+    }),
+    (None, {
+      "fields": (("link","link_github"),)
+    }),
+    (None, {
+      "fields": (("poster","get_image"),)
+    }),
+    (None, {
+      "fields": (("draft"),)
+    }),
+  )
+
+
+  def get_image(self,obj):
+    return mark_safe(f'<img src={obj.poster.url} width="50" height="50"')
+  
+  get_image.short_description = "Превью"
+
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
   '''Образование'''
@@ -59,6 +101,11 @@ class EducationAdmin(admin.ModelAdmin):
     }),
   )
 
+@admin.register(MySkill)
+class MySkillAdmin(admin.ModelAdmin):
+  '''Профессиональные навыки'''
+  list_display = ("title","level")
+
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
@@ -67,6 +114,45 @@ class OfferAdmin(admin.ModelAdmin):
   readonly_fields = ("subject","name","email","message","created_at")
   list_display_links = ("subject",)
   search_fields = ("subject",)
+
+@admin.register(Heading)
+class HeadingAdmin(admin.ModelAdmin):
+  '''Категории портфолио'''
+  list_display = ("title_heading","class_heaging","url","is_active")
+  #readonly_fields = ("class_heaging",)
+  list_editable = ("is_active",)
+
+@admin.register(MyInfo)
+class MyInfoAdmin(admin.ModelAdmin):
+  '''Личная информация'''
+  list_display = ("name","speciality")
+  readonly_fields = ("get_image",)
+  form = MyInfoAdminForm
+  fieldsets = (
+    (None, {
+      "fields": (("name","speciality","age","languages"),)
+    }),
+    (None, {
+      "fields": (("email","phone"),)
+    }),
+    (None, {
+      "fields": (("about",),)
+    }),
+    (None, {
+      "fields": (("avatar","get_image"),)
+    }),
+  )
+
+  def get_image(self,obj):
+    return mark_safe(f'<img src={obj.avatar.url} width="50" height="50"')
+  
+  get_image.short_description = "Превью"
+
+
+@admin.register(SocialContact)
+class SocialContactAdmin(admin.ModelAdmin):
+  '''Социалки'''
+  list_display = ("name","title","link")
 
 
 @admin.register(Review)
