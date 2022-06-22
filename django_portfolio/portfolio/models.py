@@ -91,6 +91,7 @@ class Heading(models.Model):
   def __str__(self):
     return self.title_heading
 
+
 class Portfolio(models.Model):
   '''Примеры работ'''
   title = models.CharField("Название работы", max_length=250)
@@ -103,6 +104,8 @@ class Portfolio(models.Model):
 
   def __str__(self):
     return f'[{self.heading}] {self.title}'
+
+
 
 class Review(models.Model):
   '''Отзывы'''

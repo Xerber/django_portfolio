@@ -123,100 +123,66 @@
     </div>
   </div>
 </div>
-<div class="section" id="portfolio">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 ml-auto mr-auto">
-        <div class="h4 text-center mb-4 title">Портфолио</div>
-        <div class="nav-align-center">
-          <ul class="nav nav-pills nav-pills-primary" role="tablist">
-            {% for head in heading %}
-              <li class="nav-item"><a class={% if head.is_active == True %}"nav-link active"{% else %}"nav-link"{% endif %} rel="tooltip" data-placement="bottom" title="{{ head.title_heading }}" data-toggle="tab" href="#{{ head.url }}" role="tablist"><i class="{{ head.class_heaging }}" aria-hidden="true"></i></a></li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="tab-content gallery mt-5">
-      <div class="tab-pane active" id="web-development">
-        <div class="ml-auto mr-auto">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                  <figure class="cc-effect"><img src="{% static 'images/project-1.jpg' %}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Recent Project</div>
-                      <p>Web Development</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                  <figure class="cc-effect"><img src="{% static 'images/project-2.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Startup Project</div>
-                      <p>Web Development</p>
-                    </figcaption>
-                  </figure></a></div>
-            </div>
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                  <figure class="cc-effect"><img src="{% static 'images/project-3.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Food Order Project</div>
-                      <p>Web Development</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                  <figure class="cc-effect"><img src="{% static 'images/project-4.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Web Advertising Project</div>
-                      <p>Web Development</p>
-                    </figcaption>
-                  </figure></a></div>
-            </div>
+{% if heading_active.url %}
+  <div class="section" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+          <div class="h4 text-center mb-4 title">Портфолио</div>
+          <div class="nav-align-center">
+            <ul class="nav nav-pills nav-pills-primary" role="tablist">
+              {% for head in heading %}
+                <li class="nav-item"><a class={% if head.is_active == True %}"nav-link active"{% else %}"nav-link"{% endif %} rel="tooltip" data-placement="bottom" title="{{ head.title_heading }}" data-toggle="tab" href="#{{ head.url }}" role="tablist"><i class="{{ head.class_heaging }}" aria-hidden="true"></i></a></li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
       </div>
-      <div class="tab-pane" id="graphic-design" role="tabpanel">
-        <div class="ml-auto mr-auto">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="{% static 'images/graphic-design-1.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Triangle Pattern</div>
-                      <p>Graphic Design</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="{% static 'images/graphic-design-2.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Abstract Umbrella</div>
-                      <p>Graphic Design</p>
-                    </figcaption>
-                  </figure></a></div>
+        <div class="tab-content gallery mt-5"> 
+          <div class="tab-pane active" id="{{ heading_active.url }}">
+            <div class="ml-auto mr-auto">
+              <div class="row">
+                {% for portfolio in portfolios %}
+                  <div class="col-md-6">
+                    {% for port in portfolio %}
+                      <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="{{ port.url }}">
+                        <figure class="cc-effect"><img src="{{ port.poster.url }}" alt="Image"/>
+                          <figcaption>
+                            <div class="h4"><p>{{ port.title }}</p></div>
+                            <p>{{ port.title_heading }}</p>
+                          </figcaption>
+                        </figure></a>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
             </div>
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="{% static 'images/graphic-design-3.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Cube Surface Texture</div>
-                      <p>Graphic Design</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="{% static 'images/graphic-design-4.jpg'%}" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Abstract Line</div>
-                      <p>Graphic Design</p>
-                    </figcaption>
-                  </figure></a></div>
+          </div>
+          <div class="tab-pane" id="{{ heading_na.url }}" role="tabpanel">
+            <div class="ml-auto mr-auto">
+              <div class="row">
+                {% for portfolio_na in portfolios_na %}
+                  <div class="col-md-6">
+                    {% for portf in portfolio_na %}
+                      <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="{{ portf.url }}">
+                          <figure class="cc-effect"><img src="{{ portf.poster.url }}" alt="Image"/>
+                            <figcaption>
+                              <div class="h4">{{ portf.title }}</div>
+                              <p>{{ portf.title_heading }}</p>
+                            </figcaption>
+                          </figure></a>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
-</div>
+{% endif %}
 <div class="section" id="experience">
   <div class="container cc-experience">
     <div class="h4 text-center mb-4 title">Опыт работы</div>

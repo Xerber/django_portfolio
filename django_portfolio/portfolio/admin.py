@@ -52,11 +52,13 @@ class WorkExperienceAdmin(admin.ModelAdmin):
   )
 
 
+
 @admin.register(Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):
   '''Примеры работ'''
-  list_display = ("title","heading","link_github")
+  list_display = ("title","heading","link_github","draft")
   readonly_fields = ("get_image",)
+  list_editable = ("draft",)
   form = PortfolioAdminForm
   fieldsets = (
     (None, {
@@ -119,7 +121,6 @@ class OfferAdmin(admin.ModelAdmin):
 class HeadingAdmin(admin.ModelAdmin):
   '''Категории портфолио'''
   list_display = ("title_heading","class_heaging","url","is_active")
-  #readonly_fields = ("class_heaging",)
   list_editable = ("is_active",)
 
 @admin.register(MyInfo)
