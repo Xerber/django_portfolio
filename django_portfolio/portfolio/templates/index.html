@@ -49,7 +49,7 @@
       <div class="page-header-image" data-parallax="true"></div>
       <div class="container">
         <div class="content-center">
-          <div class="cc-profile-image"><a href="#"><img src="{% static 'images/my_photo.jpg'%}" alt="Image"/></a></div>
+          <div class="cc-profile-image"><a href="#"><img src="{{ myinfo.avatar.url }}" alt="Image"/></a></div>
           <div class="h2 title">{{ myinfo.name }}</div>
           <p class="category text-white">{{ myinfo.speciality }}</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Написать мне</a><a class="btn btn-primary" href="{% static 'images/Дзюба Игорь Николаевич.pdf' %}" data-aos="zoom-in" data-aos-anchor="data-aos-anchor" target="_blank">Скачать резюме</a>
         </div>
