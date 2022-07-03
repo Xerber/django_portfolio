@@ -5,6 +5,12 @@ from .models import WorkExperience, Education, Review, Heading, MyInfo, SocialCo
 from .forms import OfferForm
 
 
+def conv(dbinfo):
+  '''Функция для разбития информации по 2 в строку'''
+  info = []
+  for i in range(0, len(dbinfo), 2):
+    info.append(dbinfo[i:i+2])
+  return info
 
 def index(request):
     experience = WorkExperience.objects.all().order_by('-start_year')#Опыт работы
@@ -23,20 +29,14 @@ def index(request):
 
     portfolio_all = Portfolio.objects.raw('''SELECT portfolio_portfolio.id,title,poster,portfolio_heading.title_heading,portfolio_portfolio.link_github as url FROM portfolio_portfolio, portfolio_heading WHERE 
                                           portfolio_portfolio.heading_id == portfolio_heading.id AND is_active==True AND draft==False LIMIT 4''')
-    portfolio = []
-    for i in range(0, len(portfolio_all), 2):
-      portfolio.append(portfolio_all[i:i+2])
+    portfolio = conv(portfolio_all)
 
     portfolio_na_all = Portfolio.objects.raw('''SELECT portfolio_portfolio.id,title,poster,portfolio_heading.title_heading,portfolio_portfolio.link_github as url FROM portfolio_portfolio, portfolio_heading WHERE 
                                           portfolio_portfolio.heading_id == portfolio_heading.id AND is_active==False AND draft==False LIMIT 4''')
-    portfolio_na = []
-    for i in range(0, len(portfolio_na_all), 2):
-      portfolio_na.append(portfolio_na_all[i:i+2])
+    portfolio_na = conv(portfolio_na_all)
 
     myskill_all = list(MySkill.objects.all())#Все социалки
-    myskill = []
-    for i in range(0, len(myskill_all), 2):
-      myskill.append(myskill_all[i:i+2])
+    myskill = conv(myskill_all)
 
     return render(request, 'index.html', {'experience': experience,'education': education,'reviews': review, 
                   'heading': heading,'myinfo': myinfo, 'socials':social, 'myskills': myskill, 'portfolios': portfolio,
