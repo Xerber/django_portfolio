@@ -145,13 +145,35 @@
                 {% for portfolio in portfolios %}
                   <div class="col-md-6">
                     {% for port in portfolio %}
-                      <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="{{ port.url }}">
+                      <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="{% url 'view_portfolio' port.id %}"
+                        data-toggle="modal" data-target="#myModal{{port.id}}">
                         <figure class="cc-effect"><img src="{{ port.poster.url }}" alt="Image"/>
                           <figcaption>
                             <div class="h4"><p>{{ port.title }}</p></div>
                             <p>{{ port.title_heading }}</p>
                           </figcaption>
                         </figure></a>
+                      </div>
+                      <!-- Modal -->
+                      <div class="modal fade" id="myModal{{port.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">{{ port.title }}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Раздел: {{ port.heading }}</p>
+                              {{ port.description|safe }}
+                              <p><a href="{{ port.link_github}}" target="_blank">Ссылка в github</a></p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     {% endfor %}
                   </div>
@@ -165,13 +187,35 @@
                 {% for portfolio_na in portfolios_na %}
                   <div class="col-md-6">
                     {% for portf in portfolio_na %}
-                      <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="{{ portf.url }}">
+                      <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="{% url 'view_portfolio' portf.id %}"
+                         data-toggle="modal" data-target="#myModal{{portf.id}}">
                           <figure class="cc-effect"><img src="{{ portf.poster.url }}" alt="Image"/>
                             <figcaption>
                               <div class="h4">{{ portf.title }}</div>
                               <p>{{ portf.title_heading }}</p>
                             </figcaption>
                           </figure></a>
+                      </div>
+                      <!-- Modal -->
+                      <div class="modal fade" id="myModal{{portf.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">{{ portf.title }}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Раздел: {{ portf.heading }}</p>
+                              {{ portf.description|safe }}
+                              <p><a href="{{ portf.link_github}}" target="_blank">Ссылка в github</a></p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     {% endfor %}
                   </div>

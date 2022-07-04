@@ -1,3 +1,6 @@
+from django.urls import reverse
+from urllib import request
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, View
 
@@ -27,11 +30,11 @@ def index(request):
       heading_active = None
       heading_na = None
 
-    portfolio_all = Portfolio.objects.raw('''SELECT portfolio_portfolio.id,title,poster,portfolio_heading.title_heading,portfolio_portfolio.link_github as url FROM portfolio_portfolio, portfolio_heading WHERE 
+    portfolio_all = Portfolio.objects.raw('''SELECT portfolio_portfolio.id,title,poster,description,portfolio_heading.title_heading,portfolio_portfolio.link_github as url FROM portfolio_portfolio, portfolio_heading WHERE 
                                           portfolio_portfolio.heading_id == portfolio_heading.id AND is_active==True AND draft==False LIMIT 4''')
     portfolio = conv(portfolio_all)
 
-    portfolio_na_all = Portfolio.objects.raw('''SELECT portfolio_portfolio.id,title,poster,portfolio_heading.title_heading,portfolio_portfolio.link_github as url FROM portfolio_portfolio, portfolio_heading WHERE 
+    portfolio_na_all = Portfolio.objects.raw('''SELECT portfolio_portfolio.id,title,poster,description,portfolio_heading.title_heading,portfolio_portfolio.link_github as url FROM portfolio_portfolio, portfolio_heading WHERE 
                                           portfolio_portfolio.heading_id == portfolio_heading.id AND is_active==False AND draft==False LIMIT 4''')
     portfolio_na = conv(portfolio_na_all)
 
@@ -41,6 +44,11 @@ def index(request):
     return render(request, 'index.html', {'experience': experience,'education': education,'reviews': review, 
                   'heading': heading,'myinfo': myinfo, 'socials':social, 'myskills': myskill, 'portfolios': portfolio,
                   'portfolios_na':portfolio_na,'heading_active':heading_active,'heading_na':heading_na})
+
+
+def view_portfolio(request,id):
+  vportfolio = Portfolio.objects.get(pk=id)
+  return HttpResponseRedirect(reverse("index"))
 
 
 class AddOffer(View):
